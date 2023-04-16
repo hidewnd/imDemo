@@ -74,12 +74,12 @@ func (s *Server) Handler(conn net.Conn) {
 			user.DoMessage(msg)
 		}
 	}()
-	// 超时强制监听检测处理
+	// 超时强制退出监听检测处理
 	for {
 		select {
 		case <-isLive:
 		case <-time.After(time.Second * 60):
-			user.DoMessage("You have been forced offline")
+			user.DoMessage("You have been forced offline\n")
 			fmt.Println("[" + user.Addr + "]" + user.Name + ": have been forced offline")
 			close(user.C)
 			err := conn.Close()
